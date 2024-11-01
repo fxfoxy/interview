@@ -1,8 +1,10 @@
-<?php
+<?php declare(strict_types=1);
+
+use PHPUnit\Framework\TestCase;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-class Test extends \PHPUnit\Framework\TestCase {
+class Test extends TestCase {
     /**
      * @group rotation
      * @group pawn
@@ -109,7 +111,7 @@ class Test extends \PHPUnit\Framework\TestCase {
         $movesDesc = $moves ?: '(no moves)';
         unset($lines[0]);
 
-        $isCorrect = trim($lines[1]) != 'error';
+        $isCorrect = trim($lines[1]) !== 'error';
         unset($lines[1]);
 
         $redColor = '';

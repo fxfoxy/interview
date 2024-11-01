@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 class Board {
-    private $figures = [];
+    /** @var Figure[][]  */
+    private array $figures = [];
 
     public function __construct() {
         $this->figures['a'][1] = new Rook(false);
@@ -41,9 +42,9 @@ class Board {
         $this->figures['h'][8] = new Rook(true);
     }
 
-    public function move($move) {
+    public function move(string $move): void {
         if (!preg_match('/^([a-h])(\d)-([a-h])(\d)$/', $move, $match)) {
-            throw new \Exception("Incorrect move");
+            throw new \Exception('Incorrect move');
         }
 
         $xFrom = $match[1];
@@ -53,11 +54,12 @@ class Board {
 
         if (isset($this->figures[$xFrom][$yFrom])) {
             $this->figures[$xTo][$yTo] = $this->figures[$xFrom][$yFrom];
+
+            unset($this->figures[$xFrom][$yFrom]);
         }
-        unset($this->figures[$xFrom][$yFrom]);
     }
 
-    public function dump() {
+    public function dump(): void {
         for ($y = 8; $y >= 1; $y--) {
             echo "$y ";
             for ($x = 'a'; $x <= 'h'; $x++) {
